@@ -19,11 +19,11 @@ namespace primefinder
         };
         static bool checkNumber(long numberToCheck) //checks the number against the list of existing primes.
         {
-            int root = (int)Math.Ceiling(Math.Sqrt(primes.Count));
+            long root = (long)Math.Ceiling(Math.Sqrt(primes.Count));
             bool isPrime = true;
-            for(int i = 0; i < root; i++)
+            for(long i = 0; i < root; i++)
             {
-                if(numberToCheck%primes[i] == 0)
+                if(numberToCheck%primes[(int)i] == 0) //ignore the cast of a long to an int...
                 {
                     return false; //if the number is found to not be a prime, return false.
                 }
@@ -58,13 +58,12 @@ namespace primefinder
                     }
                     if ((primes.Count + 1) % 10000 == 0) //every 10,000th prime it says how many ms elapsed.
                     {
-                        Console.WriteLine("{0:000000}|{1:000000000000}|{2}ms", (primes.Count / 10000) + 1, numberToCheck, (int)tenThousandCounter.ElapsedMilliseconds);
+                        Console.WriteLine("{0:000000}|{1:000000000000}|{2}ms", (primes.Count / 10000) + 1, numberToCheck, (long)tenThousandCounter.ElapsedMilliseconds);
                         tenThousandCounter.Restart();
                     }
                 }
                 numberToCheck+= 2;
             }
         }
-        
     }
 }
