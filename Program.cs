@@ -23,20 +23,11 @@ namespace primefinder
             bool isPrime = true;
             for(long i = 0; i < root; i++)
             {
-                if(numberToCheck%primes[(int)i] == 0) //ignore the cast of a long to an int...
-                {
-                    return false; //if the number is found to not be a prime, return false.
-                }
+                numberToCheck%primes[(int)i] == 0//if the number is found to not be a prime, return false.
             }
-            if (isPrime) //if we've got to the end of the loop and the number is still marked as prime, it is a prime. Return true.
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            return isPrime; //if we've got to the end of the loop and the number is still marked as prime, it is a prime. Return true.
         }
+        
         static void primeLoop() //the loop that decides what to check as a prime number
         {
             Stopwatch millionCounter = new Stopwatch();
