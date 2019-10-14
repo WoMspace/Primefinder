@@ -16,15 +16,13 @@ namespace primefinder
         static List<long> primes = new List<long> //the list of found prime numbers.
         {
             3,
-            5,
-            7,
-            11
+            5
         };
         static bool checkNumber(long numberToCheck) //checks the number against the list of existing primes.
         {
             long root = (long)Math.Ceiling(Math.Sqrt(numberToCheck)); //maybe check to see if it's worth checking if the root is whole
             bool isPrime = true;
-            for(long i = 0; i < root; i++)
+            for(long i = 0; primes[(int)i] <= root; i++)
             {
                 if(numberToCheck%primes[(int)i] == 0) //ignore the cast of a long to an int...
                 {
@@ -35,7 +33,7 @@ namespace primefinder
             {
                 return true;
             }
-            else
+            else //visual studio complains that there are paths without a return... there aren't but this stops it complaining.
             {
                 return false;
             }
@@ -47,7 +45,7 @@ namespace primefinder
             Stopwatch tenThousandCounter = new Stopwatch();
             tenThousandCounter.Restart();
             bool quit = false;
-            long numberToCheck = 13;
+            long numberToCheck = 7;
             while(!quit)
             {
                 bool isPrime = checkNumber(numberToCheck);
