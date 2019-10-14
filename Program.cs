@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Diagnostics;
 
@@ -13,18 +14,18 @@ namespace primefinder
         {
             primeLoop();
         }
-        static List<long> primes = new List<long> //the list of found prime numbers.
+        static List<ulong> primes = new List<ulong> //the list of found prime numbers.
         {
             3,
             5
         };
-        static bool checkNumber(long numberToCheck) //checks the number against the list of existing primes.
+        static bool checkNumber(ulong numberToCheck) //checks the number against the list of existing primes.
         {
-            long root = (long)Math.Ceiling(Math.Sqrt(numberToCheck)); //maybe check to see if it's worth checking if the root is whole
+            ulong root = (ulong)Math.Ceiling(Math.Sqrt(numberToCheck)); //maybe check to see if it's worth checking if the root is whole
             bool isPrime = true;
-            for(long i = 0; primes[(int)i] <= root; i++)
+            for(ulong i = 0; primes[(int)i] <= root; i++)
             {
-                if(numberToCheck%primes[(int)i] == 0) //ignore the cast of a long to an int...
+                if(numberToCheck%primes[(int)i] == 0) //ignore the cast of a ulong to an int...
                 {
                     return false; //if the number is found to not be a prime, return false.
                 }
@@ -45,25 +46,48 @@ namespace primefinder
             Stopwatch tenThousandCounter = new Stopwatch();
             tenThousandCounter.Restart();
             bool quit = false;
-            long numberToCheck = 7;
-            while(!quit)
+            ulong numberToCheck = 7;
+            ulong logicalProcessorsX10k = (ulong)Environment.ProcessorCount * 10000;
+            while (!quit && numberToCheck > logicalProcessorsX10k) //run for a while on a single thread, until enough primes exist to run parallel.
             {
                 bool isPrime = checkNumber(numberToCheck);
                 if(isPrime)
                 {
                     primes.Add(numberToCheck);
-                    if ((primes.Count + 1) % 1000000 == 0) //every millionth prime it says how long it's been since the last million.
+                    if ((primes.Count + 1) % 1000000 == 0) //every millionth prime it says how ulong it's been since the last million.
                     {
                         Console.WriteLine("The {0} millionth prime was {1}. That took {2} seconds.\nPrimeN|Prime Number|Time(ms)", (primes.Count / 1000000) + 1, numberToCheck, millionCounter.Elapsed.Seconds);
                         millionCounter.Restart();
                     }
                     if ((primes.Count + 1) % 10000 == 0) //every 10,000th prime it says how many ms elapsed.
                     {
-                        Console.WriteLine("{0:000000}|{1:000000000000}|{2}ms", (primes.Count / 10000) + 1, numberToCheck, (long)tenThousandCounter.ElapsedMilliseconds);
+                        Console.WriteLine("{0:000000}|{1:000000000000}|{2}ms", (primes.Count / 10000) + 1, numberToCheck, (ulong)tenThousandCounter.ElapsedMilliseconds);
                         tenThousandCounter.Restart();
                     }
                 }
                 numberToCheck+= 2;
+            }//switch to multiple threads :)
+            int threadCount = Environment.ProcessorCount;
+            while (!quit) //"for" as many items as there are threads.
+            {
+                for(int i = 0; i<threadCount;i++)
+                {
+                    Thread T = new Thread(threadsafePrimeLoop);
+                    T.Start(numberToCheck);
+                    numberToCheck = +1000;
+                }
+                Console.WriteLine("Processed {0} more primes.",threadCount*1000);
+            }
+        }
+        static void threadsafePrimeLoop(object numberToCheckObj)
+        {
+            ulong numberToCheck = (ulong)numberToCheckObj;
+            for(ulong i = numberToCheck; i < numberToCheck + 1000; i=+2)
+            {
+                if(checkNumber(i))
+                {
+                    primes.Add(i);
+                }
             }
         }
     }
