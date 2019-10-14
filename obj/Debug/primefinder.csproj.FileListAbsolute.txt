@@ -1,0 +1,7 @@
+V:\Visual Studio Projects\primefinder\bin\Debug\primefinder.exe.config
+V:\Visual Studio Projects\primefinder\bin\Debug\primefinder.exe
+V:\Visual Studio Projects\primefinder\bin\Debug\primefinder.pdb
+V:\Visual Studio Projects\primefinder\obj\Debug\primefinder.csprojAssemblyReference.cache
+V:\Visual Studio Projects\primefinder\obj\Debug\primefinder.csproj.CoreCompileInputs.cache
+V:\Visual Studio Projects\primefinder\obj\Debug\primefinder.exe
+V:\Visual Studio Projects\primefinder\obj\Debug\primefinder.pdb
