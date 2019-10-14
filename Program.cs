@@ -19,7 +19,7 @@ namespace primefinder
         };
         static bool checkNumber(long numberToCheck) //checks the number against the list of existing primes.
         {
-            long root = (long)Math.Ceiling(Math.Sqrt(primes.Count));
+            long root = (long)Math.Ceiling(Math.Sqrt(numberToCheck)); //maybe check to see if it's worth checking if the root is whole
             bool isPrime = true;
             for(long i = 0; i < root; i++)
             {
