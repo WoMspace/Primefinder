@@ -51,14 +51,14 @@ namespace primefinder
                 if(isPrime)
                 {
                     primes.Add(numberToCheck);
-                    if (primes.Count % 1000000 == 0) //every millionth prime it says how long it's been since the last million.
+                    if ((primes.Count + 1) % 1000000 == 0) //every millionth prime it says how long it's been since the last million.
                     {
-                        Console.WriteLine("The {0} millionth prime was {1}. That took {2} seconds.\nPrimeN|Prime Number|Time(ms)", primes.Count / 1000000, numberToCheck, millionCounter.Elapsed.Seconds);
+                        Console.WriteLine("The {0} millionth prime was {1}. That took {2} seconds.\nPrimeN|Prime Number|Time(ms)", (primes.Count / 1000000) + 1, numberToCheck, millionCounter.Elapsed.Seconds);
                         millionCounter.Restart();
                     }
-                    if (primes.Count % 10000 == 0) //every 10,000th prime it says how many ms elapsed.
+                    if ((primes.Count + 1) % 10000 == 0) //every 10,000th prime it says how many ms elapsed.
                     {
-                        Console.WriteLine("{0:000000}|{1:000000000000}|{2}", primes.Count / 10000, numberToCheck, (int)tenThousandCounter.ElapsedMilliseconds);
+                        Console.WriteLine("{0:000000}|{1:000000000000}|{2}ms", (primes.Count / 10000) + 1, numberToCheck, (int)tenThousandCounter.ElapsedMilliseconds);
                         tenThousandCounter.Restart();
                     }
                 }
