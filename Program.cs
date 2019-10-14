@@ -13,11 +13,11 @@ namespace primefinder
         {
             primeLoop();
         }
-        static List<long> primes = new List<long> //the list of found prime numbers.
+        static List<int> primes = new List<int> //the list of found prime numbers.
         {
             3
         };
-        static bool checkNumber(long numberToCheck) //checks the number against the list of existing primes.
+        static bool checkNumber(int numberToCheck) //checks the number against the list of existing primes.
         {
             int root = (int)Math.Ceiling(Math.Sqrt(primes.Count));
             bool isPrime = true;
@@ -44,14 +44,14 @@ namespace primefinder
             Stopwatch tenThousandCounter = new Stopwatch();
             tenThousandCounter.Restart();
             bool quit = false;
-            long numberToCheck = 5;
+            int numberToCheck = 5;
             while(!quit)
             {
                 bool isPrime = checkNumber(numberToCheck);
                 if(isPrime)
                 {
                     primes.Add(numberToCheck);
-                    if ((primes.Count + 1) % 1000000 == 0) //every millionth prime it says how long it's been since the last million.
+                    if ((primes.Count + 1) % 1000000 == 0) //every millionth prime it says how int it's been since the last million.
                     {
                         Console.WriteLine("The {0} millionth prime was {1}. That took {2} seconds.\nPrimeN|Prime Number|Time(ms)", (primes.Count / 1000000) + 1, numberToCheck, millionCounter.Elapsed.Seconds);
                         millionCounter.Restart();
