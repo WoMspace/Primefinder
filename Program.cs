@@ -15,7 +15,10 @@ namespace primefinder
         }
         static List<long> primes = new List<long> //the list of found prime numbers.
         {
-            3
+            3,
+            5,
+            7,
+            11
         };
         static bool checkNumber(long numberToCheck) //checks the number against the list of existing primes.
         {
@@ -44,7 +47,7 @@ namespace primefinder
             Stopwatch tenThousandCounter = new Stopwatch();
             tenThousandCounter.Restart();
             bool quit = false;
-            long numberToCheck = 5;
+            long numberToCheck = 13;
             while(!quit)
             {
                 bool isPrime = checkNumber(numberToCheck);
